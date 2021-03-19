@@ -3,3 +3,23 @@ incorporar datos al archivo. Los números son ingresados desde teclado. El nombr
 archivo debe ser proporcionado por el usuario desde teclado. La carga finaliza cuando
 se ingrese el número 30000, que no debe incorporarse al archivo.}
 
+program p01e01;
+
+type
+	arc_num = file of integer;
+	
+var
+	numeros: arc_num;
+	num: integer;
+
+begin
+	
+	assign(numeros, '01.dat');
+	
+	rewrite(numeros);
+	
+	
+	
+	close(numeros);
+
+end.
