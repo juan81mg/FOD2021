@@ -1,25 +1,12 @@
-{5. Realizar un programa para una tienda de celulares, que presente un menú con
-opciones para:
-a. Crear un archivo de registros no ordenados de celulares y cargarlo con datos
-ingresados desde un archivo de texto denominado “celulares.txt”. Los registros
-correspondientes a los celulares, deben contener: código de celular, el nombre,
-descripción, marca, precio, stock mínimo y el stock disponible.
-b. Listar en pantalla los datos de aquellos celulares que tengan un stock menor al
-stock mínimo.
-c. Listar en pantalla los celulares del archivo cuya descripción contenga una
-cadena de caracteres proporcionada por el usuario.
-d. Exportar el archivo creado en el inciso a) a un archivo de texto denominado
-“celular.txt” con todos los celulares del mismo.
+{6. Agregar al menú del programa del ejercicio 5, opciones para:
+a. Añadir uno o más celulares al final del archivo con sus datos ingresados por
+teclado.
+b. Modificar el stock de un celular dado.
+c. Exportar el contenido del archivo binario a un archivo de texto denominado:
+”SinStock.txt”, con aquellos celulares que tengan stock 0.
+NOTA: Las búsquedas deben realizarse por nombre de celular}
 
-NOTA 1: El nombre del archivo binario de celulares debe ser proporcionado por el usuario
-una única vez.
-
-NOTA 2: El archivo de carga debe editarse de manera que cada celular se especifique en
-dos líneas consecutivas: en la primera se especifica: código de celular, el precio, marca
-y nombre, y en la segunda el stock disponible, stock mínimo y la descripción, en ese
-orden. Cada celular se carga leyendo dos líneas del archivo “carga.txt”.}
-
-program p01e05;
+program p01e06;
 
 type
     celular = record
@@ -37,6 +24,36 @@ var
     celulares: archivo;
     op, o: integer;
 
+procedure leer(var cel:celular);
+    begin
+        writeln('Ingrese la marca y nombre del celular (fin para salir): ');
+        readln(cel.marca_nombre);
+        if (cel.marca_nombre <> 'fin')then begin
+            writeln('Ingrese el codigo: ');
+            readln(cel.cod);
+            writeln('Ingrese el precio: ');
+            readln(cel.precio);
+            writeln('Ingrese el stock minimo: ');
+            readln(cel.stk_min);
+            writeln('Ingrese el stock disponible: ');
+            readln(cel.stk_dis);
+            writeln('Ingrese una descripcion: ');
+            readln(cel.descripcion);
+            end;
+    end;
+
+procedure agregarCelular(var celulares: archivo);
+    var
+        cel: celular;
+	begin
+		seek(celulares, filesize(celulares));
+		leer(cel);
+		while(cel.marca_nombre <> 'fin') do begin
+			write(celulares, cel);
+			leer(cel);
+			end;
+	close(celulares);
+	end;
 
 procedure exportarTXT(var celulares: archivo);
     var
@@ -128,6 +145,9 @@ procedure submenu(var o: integer);
 		writeln('(1) Listar celulares con menor stock al minimo');
         writeln('(2) Buscar una descripcion');
         writeln('(3) Exportar a TXT');
+        writeln('(4) Agragar celular al final');       
+        writeln('(5) ');
+        writeln('(6) ');
 		writeln('');
 		writeln('(0) Salir');
 		writeln('');
@@ -174,6 +194,13 @@ begin
                         1: listarMinimos(celulares);
                         2: buscarDescripcion(celulares);
                         3: exportarTXT(celulares);
+                        4: agregarCelular(celulares);
+                        5:begin
+                          
+                        end;
+                        6:begin
+                          
+                        end;
                         else begin
                             writeln();
                             writeln('Ingrese una opcion correcta !!!');
