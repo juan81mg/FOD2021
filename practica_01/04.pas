@@ -40,6 +40,43 @@ procedure leer(var emp:empleado);
 			end;
 	end;
 
+procedure exportarDNI00(var empleados: arc_emp);
+	var
+		tex: Text;
+		e: empleado;
+	begin
+		assign(tex, 'faltaDNIEmpleado.txt');
+		rewrite(tex);
+
+		while not eof(empleados)do begin
+			read(empleados, e);
+		  	with e do
+			  	if(dni = 00)then
+					writeln(tex, ' ',num, ' ', apellido, ' ', nombre, ' ', edad, ' ', dni);
+		end;
+
+		close(tex);
+		close(empleados);
+	end;
+
+procedure exportarLista(var empleados: arc_emp);
+	var
+		tex: Text;
+		e: empleado;
+	begin
+		assign(tex, 'todos_empleados.txt');
+		rewrite(tex);
+
+		while not eof(empleados)do begin
+			read(empleados, e);
+		  	with e do
+				writeln(tex, ' ',num, ' ', apellido, ' ', nombre, ' ', edad, ' ', dni);
+			end;
+
+		close(tex);
+		close(empleados);
+	end;
+
 procedure modificarEdad(var empleados:arc_emp);
 	var
 		aux: integer;
@@ -209,12 +246,8 @@ begin
 						5: listar5(empleados);
 						6: agregarEmpleado(empleados);
 						7: modificarEdad(empleados);
-						8: begin
-							{exportarContenido(empleados)}
-							end;
-						9: begin
-							{exportarDNI00(empleados)}
-							end;
+						8: exportarLista(empleados);
+						9: exportarDNI00(empleados);
 						else begin
 							writeln();
 							writeln('Ingrese una opcion correcta !!!');

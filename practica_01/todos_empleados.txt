@@ -1,0 +1,7 @@
+ 12 perez juan 34 30370
+ 23 gil juan 77 -16619
+ 45 foforo llama 66 0
+ 77 gogo ramon 56 -5310
+ 98 fin gaston 45 29714
+ 23 gogo juan 45 -5254
+ 45 garcia andrea 56 -13684
