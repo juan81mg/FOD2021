@@ -86,7 +86,7 @@ procedure modificarEdad(var empleados:arc_emp);
 		writeln('Ingrese un numero de empleado --->> ');
 		read(aux);
 		ok:= false;
-		while not eof (empleados) do begin
+		while not eof (empleados) and not (ok) do begin
 			read(empleados, emp);
 			if (emp.num = aux) and not(ok) then begin
 

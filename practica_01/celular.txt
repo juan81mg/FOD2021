@@ -1,4 +1,4 @@
  666 34  motorola g8
- 2 5  bueno
+ 45 5  bueno
  456 56  samsung s20
  6 3  muyBueno

@@ -24,6 +24,51 @@ var
     celulares: archivo;
     op, o: integer;
 
+
+procedure exportarTXTsinStock(var celulares: archivo);
+    var
+        cel: celular;
+        tex: Text;
+    begin
+        reset(celulares);
+        Assign(tex, 'SinStock.txt');
+        Rewrite(tex);
+		while not eof(celulares)do begin
+			read(celulares, cel);
+            if (cel.stk_dis = 0) then
+                with cel do begin
+                    writeln(tex, ' ', cod, ' ', precio, ' ', marca_nombre);
+                    writeln(tex, ' ', stk_dis, ' ', stk_min, ' ', descripcion);
+                    end;
+			end;
+        close(tex);
+        close(celulares);
+    end;
+
+procedure modificarStock(var celulares: archivo);
+    var
+        nom: String[24];
+        cel: celular;
+        ok: Boolean;
+    begin
+        reset(celulares);
+        ok:= False;
+        writeln('Ingrese la marca y nombre para cambiar stock');
+        readln(nom);
+        nom:= ' ' + nom;
+        while not eof (celulares) and (ok=False) do begin
+            read(celulares, cel);
+            if (cel.marca_nombre = nom)then begin
+                writeln('Ingrese el nuevo stock');
+                read(cel.stk_dis);
+                seek(celulares, FilePos(celulares)-1);
+                write(celulares, cel);
+                ok:= True;
+                end;
+            end;
+        close(celulares);
+    end;
+
 procedure leer(var cel:celular);
     begin
         writeln('Ingrese la marca y nombre del celular (fin para salir): ');
@@ -46,13 +91,14 @@ procedure agregarCelular(var celulares: archivo);
     var
         cel: celular;
 	begin
+        reset(celulares);
 		seek(celulares, filesize(celulares));
 		leer(cel);
 		while(cel.marca_nombre <> 'fin') do begin
 			write(celulares, cel);
 			leer(cel);
 			end;
-	close(celulares);
+	    close(celulares);
 	end;
 
 procedure exportarTXT(var celulares: archivo);
@@ -145,9 +191,9 @@ procedure submenu(var o: integer);
 		writeln('(1) Listar celulares con menor stock al minimo');
         writeln('(2) Buscar una descripcion');
         writeln('(3) Exportar a TXT');
-        writeln('(4) Agragar celular al final');       
-        writeln('(5) ');
-        writeln('(6) ');
+        writeln('(4) Agregar celular al final');       
+        writeln('(5) Modificar un stock');
+        writeln('(6) Exportar celulares sin stock');
 		writeln('');
 		writeln('(0) Salir');
 		writeln('');
@@ -195,12 +241,8 @@ begin
                         2: buscarDescripcion(celulares);
                         3: exportarTXT(celulares);
                         4: agregarCelular(celulares);
-                        5:begin
-                          
-                        end;
-                        6:begin
-                          
-                        end;
+                        5: modificarStock(celulares);
+                        6: exportarTXTsinStock(celulares);
                         else begin
                             writeln();
                             writeln('Ingrese una opcion correcta !!!');
