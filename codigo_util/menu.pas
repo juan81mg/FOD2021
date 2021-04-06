@@ -1,5 +1,5 @@
-	op : integer;
-
+uses
+	crt;
 
 procedure submenu(var op : integer);
 	begin
@@ -29,54 +29,27 @@ procedure menu(var op: integer);
 
 	end;
 	
+var
+    op: Byte;
 begin
-	op:= -1;
-	while (op <> 0) do begin
-		menu(op);
-			
-		case op of
-			0: begin
-				writeln();
-				writeln('Salio del programa');
-				writeln();
-				end;
-			1: begin
-				op:= 0;
-				end;
-			2: begin
-				while op <> 0 do begin
-					submenu(op);
-					case op of
-						0: begin
-							writeln();
-							writeln('Salio del programa');
-							writeln();
-							end;			
-						3: begin
-							op:= 0;
-							end;
-						4: begin
-							op:= 0;
-							end;
-						5: begin
-							op:= 0;
-							end
-						else begin
-							writeln();
-							writeln('Ingrese una opcion correcta !!!');
-							writeln();
-							end;
-						end;
-					end;
-				end
-			else begin
-				writeln();
-				writeln('Ingrese una opcion correcta !!!');
-				writeln();
-				end;
-			end;
-		end;
-	
-	writeln('opcion elegida === ', op);
-	
+    op:= -1;
+    while (op <> 0) do begin
+        menu();
+        read(op);
+        case op of
+            0: begin
+                writeln();
+                writeln('Salio del programa');
+                readkey();
+                end;
+            1: //crearMaestro();
+            else begin
+                writeln();
+                writeln('Ingrese una opcion correcta !!!');
+                writeln();
+                readkey();
+                end;
+            end;
+        end;
+
 end.
